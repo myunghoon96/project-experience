@@ -7,9 +7,9 @@
 가능하다.
 
 
-서버는 cmd를 이용하여 bin 디렉토리에서 java ServerMain으로 실행한다.
+서버는 터미널을 이용하여 bin 디렉토리에서 java ServerMain으로 실행한다.
 
-클라이언트는 cmd를 이용하여 bin 디렉토리에서 java ClientMain으로 실행한다.
+클라이언트는 터미널을 이용하여 bin 디렉토리에서 java ClientMain으로 실행한다.
 
 file:[파일이름] 을 통하여 파일을 전송할 수 있다. 업로드/다운로드 위치는 bin 디렉토리이다.
 
