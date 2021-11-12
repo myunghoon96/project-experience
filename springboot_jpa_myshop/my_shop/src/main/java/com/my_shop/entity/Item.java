@@ -2,6 +2,7 @@ package com.my_shop.entity;
 
 import com.my_shop.constant.ItemStatus;
 import com.my_shop.dto.ItemFormDto;
+import com.my_shop.exception.OutOfStockException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -40,4 +41,14 @@ public class Item extends BaseEntity{
         this.detail = itemFormDto.getDetail();
         this.itemStatus = itemFormDto.getItemStatus();
     }
+
+    public void removeStock(int stock){
+        int restStock = this.stock - stock;
+        if(restStock<0){
+            throw new OutOfStockException("상품의 재고가 부족 합니다. (현재 재고 수량: " + this.stock + ")");
+        }
+        this.stock = restStock;
+    }
+
+
 }
