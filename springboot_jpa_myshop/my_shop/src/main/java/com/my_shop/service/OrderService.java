@@ -27,11 +27,8 @@ import java.util.List;
 public class OrderService {
 
     private final ItemRepository itemRepository;
-
     private final MemberRepository memberRepository;
-
     private final OrderRepository orderRepository;
-
     private final ItemImgRepository itemImgRepository;
 
     public Long order(OrderDto orderDto, String email){
