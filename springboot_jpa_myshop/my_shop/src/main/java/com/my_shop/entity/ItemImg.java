@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class ItemImg {
 
     @Id @GeneratedValue
-    @Column(name = "item_img_name")
+    @Column(name = "item_img_id")
     private Long id;
 
     private String imgName;
