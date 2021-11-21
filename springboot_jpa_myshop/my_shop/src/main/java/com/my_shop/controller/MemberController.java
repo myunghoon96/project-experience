@@ -1,5 +1,6 @@
 package com.my_shop.controller;
 
+import com.my_shop.constant.Role;
 import com.my_shop.dto.MemberFormDto;
 import com.my_shop.entity.Member;
 import com.my_shop.service.MemberService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,6 +25,11 @@ public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
+    @ModelAttribute("roles")
+    public Role[] roles() {
+        return Role.values();
+    }
+
     @GetMapping("/new")
     public String newMember(Model model) {
         model.addAttribute("memberFormDto", new MemberFormDto());
@@ -32,6 +39,7 @@ public class MemberController {
     @PostMapping("/new")
     public String newMember(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
 
+        log.info("memberFormDto.role", memberFormDto.getRole());
         if (bindingResult.hasErrors()){
             log.info("errors={}", bindingResult);
             return "member/memberForm";

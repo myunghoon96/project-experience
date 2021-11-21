@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout1}">
-<meta name="_csrf" th:content="${_csrf.token}"/>
-<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
     <style>
@@ -50,6 +49,16 @@
             <input type="text" th:field="*{address}" class="form-control" placeholder="주소를 입력해주세요">
             <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError">Incorrect data</p>
         </div>
+        <div class="form-group">
+            <div th:each="type : ${roles}" class="form-check form-check-inline">
+                <input type="radio" th:field="*{role}" th:value="${type.name()}" class="form-check-input">
+                <label th:for="${#ids.prev('role')}" th:text="${type.description}"
+                       class="form-check-label">
+                </label>
+            </div>
+            <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="fieldError">Incorrect data</p>
+        </div>
+
         <div style="text-align: center">
             <button type="submit" class="btn btn-primary" style="">Submit</button>
         </div>
