@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<h1>Index</h1>
+<h3 sec:authorize="isAuthenticated()">sec:authentication="name" <span sec:authentication="name"></span></h3>
+<h3 sec:authorize="isAuthenticated()">sec:authentication="principal" <span sec:authentication="principal"></span></h3>
+<h3 sec:authorize="isAuthenticated()">sec:authentication="principal.authorities" <span sec:authentication="principal.authorities"></span></h3>
+<hr>
+<a sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a>
+<a sec:authorize="isAnonymous()" th:href="@{/member/signup}">회원가입</a>
+</body>
+</html>
