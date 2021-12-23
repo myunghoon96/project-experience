@@ -18,6 +18,6 @@ public class AuditorAwareConfig implements AuditorAware<String> {
             return null;
         }
 
-        return Optional.of((String)authentication.getPrincipal());
+        return Optional.of((String)authentication.getName());
     }
 }
