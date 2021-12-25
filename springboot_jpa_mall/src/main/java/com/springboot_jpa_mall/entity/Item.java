@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter @Setter
 @Table(name = "item")
 public class Item extends BaseEntity {
-    @Column
+    @Column(name = "item_id")
     @Id
     @GeneratedValue
     private Long id;
@@ -34,6 +34,19 @@ public class Item extends BaseEntity {
         this.itemPrice = itemPrice;
         this.itemStock = itemStock;
         this.itemStatus = itemStatus;
+    }
+
+    public OrderItem createOrderItem(Item item, Integer orderPrice, Integer count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setAmount(orderPrice*count);
+        orderItem.setCount(count);
+        return orderItem;
+    }
+
+    public void subtractItemStock(Integer count) {
+        this.itemStock = this.itemStock-count;
     }
 
 }

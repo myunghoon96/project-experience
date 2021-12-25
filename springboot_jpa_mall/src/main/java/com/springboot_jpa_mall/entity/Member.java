@@ -1,25 +1,22 @@
 package com.springboot_jpa_mall.entity;
 
 import com.springboot_jpa_mall.constant.Role;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 @NoArgsConstructor
 @Entity
-@Getter @Setter
+@Getter @Setter @ToString
 @Table(name = "member")
 //@EntityListeners(AuditingEntityListener.class)
 public class Member extends BaseEntity{
 
     @Id @GeneratedValue
-    @Column
+    @Column(name = "member_id", unique = true)
     Long id;
 
-    @Column(name = "member_id", unique = true)
-    String memberId;
+    @Column(name = "member_login_id", unique = true)
+    String memberLoginId;
 
     @Column
     String password;
@@ -28,8 +25,8 @@ public class Member extends BaseEntity{
     Role role;
 
     @Builder
-    public Member (String memberId, String password) {
-        this.memberId = memberId;
+    public Member (String memberLoginId, String password) {
+        this.memberLoginId = memberLoginId;
         this.password = password;
         this.role = Role.ADMIN;
     }

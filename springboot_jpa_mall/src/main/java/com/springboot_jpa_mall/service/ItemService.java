@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Getter
 @Slf4j
@@ -32,4 +34,19 @@ public class ItemService {
         return newItem;
     }
 
+    public ItemDto getItemDetail(Long itemId) {
+
+        Optional<Item> findItemWrapper = itemRepository.findById(itemId);
+        Item findItem = findItemWrapper.get();
+
+        ItemDto itemDto = ItemDto.builder()
+                .itemName(findItem.getItemName())
+                .itemPrice(findItem.getItemPrice())
+                .itemStock(findItem.getItemStock())
+                .itemStatus(findItem.getItemStatus())
+                .build();
+
+        return itemDto;
+
+    }
 }

@@ -24,25 +24,25 @@ public class MemberService implements UserDetailsService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
 
-        Member newMember = new Member(memberDto.getMemberId(), memberDto.getPassword());
+        Member newMember = new Member(memberDto.getMemberLoginId(), memberDto.getPassword());
 
         memberRepository.save(newMember);
         return newMember;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String memberLoginId) throws UsernameNotFoundException {
 
-        Optional<Member> memberWrapper = memberRepository.findByMemberId(memberId);
+        Optional<Member> memberWrapper = memberRepository.findByMemberLoginId(memberLoginId);
         Member member = memberWrapper.get();
 //        List<GrantedAuthority> authorities = new ArrayList<>();
 //        authorities.add(new SimpleGrantedAuthority(Role.ROLE_ADMIN.name()));
         if(member == null){
-            throw new UsernameNotFoundException(memberId);
+            throw new UsernameNotFoundException(memberLoginId);
         }
 //        return new User(member.getMemberId(), member.getPassword(), authorities);
         return User.builder()
-                .username(member.getMemberId())
+                .username(member.getMemberLoginId())
                 .password(member.getPassword())
                 .roles(member.getRole().toString())
                 .build();
