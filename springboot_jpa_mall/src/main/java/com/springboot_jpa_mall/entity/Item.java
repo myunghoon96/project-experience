@@ -8,14 +8,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @Entity
 @Getter @Setter
 @Table(name = "item")
 public class Item extends BaseEntity {
     @Column(name = "item_id")
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
     @Column(name = "item_name")
     private String itemName;
@@ -28,12 +30,16 @@ public class Item extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ItemStatus itemStatus;
 
+    @OneToMany(mappedBy = "item", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Image> images = new ArrayList<>();
+
     @Builder
-    public Item(String itemName, Integer itemPrice, Integer itemStock, ItemStatus itemStatus) {
+    public Item(String itemName, Integer itemPrice, Integer itemStock, ItemStatus itemStatus, List<Image> images) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.itemStock = itemStock;
         this.itemStatus = itemStatus;
+        this.images =images;
     }
 
     public OrderItem createOrderItem(Item item, Integer orderPrice, Integer count) {

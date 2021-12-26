@@ -15,10 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.util.List;
+
 @Slf4j
 @Controller
 @Getter
@@ -68,13 +71,18 @@ public class ItemController {
     }
 
     @PostMapping("/new")
-    public String addItem(@Valid ItemDto itemDto, BindingResult bindingResult) {
+    public String addItem(@Valid ItemDto itemDto, BindingResult bindingResult, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList) {
         if (bindingResult.hasErrors()){
             log.info("errors={}", bindingResult);
             return "item/addItemForm";
         }
 
-        itemService.addItem(itemDto);
+        try {
+            itemService.addItem(itemDto, itemImgFileList);
+        }
+        catch (Exception e){
+            log.info(e.getMessage());
+        }
 
         return "redirect:/";
     }
