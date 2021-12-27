@@ -1,6 +1,7 @@
 package com.springboot_jpa_mall.controller;
 
 import com.springboot_jpa_mall.dto.MemberDto;
+import com.springboot_jpa_mall.entity.Member;
 import com.springboot_jpa_mall.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 @Slf4j
@@ -52,6 +54,17 @@ public class MemberController {
     public String memberLoginError(Model model) {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요");
         return "member/loginForm";
+    }
+
+
+    @PostConstruct
+    public void initializing() {
+
+        MemberDto memberDto = MemberDto.builder()
+                .memberLoginId("userA")
+                .password("1234")
+                .build();
+        memberService.addMember(memberDto);
     }
 
 }

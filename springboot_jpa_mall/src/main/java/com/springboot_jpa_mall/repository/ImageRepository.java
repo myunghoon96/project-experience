@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface ImageRepository extends JpaRepository<Image, Long> {
 
     Optional<Image> findById(Long id);
-    Optional<Image> findByItemId(Long itemId);
+    Optional<Image> findTop1ByItemId(Long itemId);
 
 }

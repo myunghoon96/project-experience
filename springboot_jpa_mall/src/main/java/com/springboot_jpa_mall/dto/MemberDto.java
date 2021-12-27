@@ -1,5 +1,6 @@
 package com.springboot_jpa_mall.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class MemberDto {
     @Length(min = 4, max = 8, message = "password 길이 4~8")
     String password;
 
+    @Builder
     public MemberDto (String memberLoginId, String password) {
         this.memberLoginId = memberLoginId;
         this.password = password;

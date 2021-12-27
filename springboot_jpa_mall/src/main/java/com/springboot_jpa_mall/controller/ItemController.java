@@ -2,8 +2,12 @@ package com.springboot_jpa_mall.controller;
 
 import com.springboot_jpa_mall.constant.ItemStatus;
 import com.springboot_jpa_mall.dto.ItemDto;
+import com.springboot_jpa_mall.entity.Image;
 import com.springboot_jpa_mall.entity.Item;
+import com.springboot_jpa_mall.repository.ImageRepository;
 import com.springboot_jpa_mall.repository.ItemRepository;
+
+import com.springboot_jpa_mall.repository.ItemWithImage;
 import com.springboot_jpa_mall.service.ItemService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +25,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -31,13 +36,18 @@ public class ItemController {
     private ItemService itemService;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private ImageRepository imageRepository;
 
     @GetMapping("")
     public String getAllItems(Model model) {
         PageRequest pageRequest = PageRequest.of(0, 100);
-        Page<Item> pageItems = itemRepository.findAll(pageRequest);
+        Page<ItemWithImage> pageItems = itemRepository.findBy(pageRequest);
         model.addAttribute("pageItems", pageItems);
-
+        log.info("get all items");
+        log.info("{}", pageItems);
+        log.info("{}", pageItems.getContent());
+        log.info("{}", pageItems.getContent());
         return "item/allItems";
     }
 
@@ -58,9 +68,13 @@ public class ItemController {
     public String itemDetail(Model model, @PathVariable("itemId") Long itemId){
         ItemDto itemDto = itemService.getItemDetail(itemId);
         Integer count = 1;
+        Optional<Image> imageWrapper = imageRepository.findTop1ByItemId(itemId);
+        String imageUrl = imageWrapper.get().getImageUrl();
+        log.info("image url {}", imageUrl);
         model.addAttribute("item", itemDto);
         model.addAttribute("count", count);
         model.addAttribute("itemId", itemId);
+        model.addAttribute("imageUrl", imageUrl);
         return "item/itemDetail";
     }
 
@@ -81,7 +95,9 @@ public class ItemController {
             itemService.addItem(itemDto, itemImgFileList);
         }
         catch (Exception e){
+            log.info("fail");
             log.info(e.getMessage());
+            log.info("error "+e);
         }
 
         return "redirect:/";

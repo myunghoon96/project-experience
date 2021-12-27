@@ -14,14 +14,14 @@ public class ImageService {
     @Autowired
     FileService fileService;
 
-    public void saveImage(Image itemImg, MultipartFile itemImgFile) throws Exception{
+    public Image saveImage(Image itemImg, MultipartFile itemImgFile) throws Exception{
         String originalFilename = itemImgFile.getOriginalFilename();
         String imageName = "";
         String imageUrl = "";
 
         //파일 업로드
         if(!StringUtils.isEmpty(originalFilename)){
-            imageName = fileService.uploadFile("C:/Users/NKNK-DESKTOP/Desktop/image/", originalFilename,
+            imageName = fileService.uploadFile("C:/Users/NKNK-DESKTOP/Desktop/project-experience/springboot_jpa_mall/src/main/resources/static/images/", originalFilename,
                     itemImgFile.getBytes());
             imageUrl = "/images/" + imageName;
         }
@@ -31,6 +31,8 @@ public class ImageService {
         itemImg.setImageName(imageName);
         itemImg.setImageUrl(imageUrl);
         imageRepository.save(itemImg);
+
+        return itemImg;
     }
 
 }

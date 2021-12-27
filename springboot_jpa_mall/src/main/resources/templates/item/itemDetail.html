@@ -67,6 +67,7 @@
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="col-md-6">
                     <h1 class="display-5 fw-bolder" th:text="${item.itemName}">Shop item template</h1>
+                    <img th:src="@{/images/abc.png}" th:alt="${item.itemName}">
                     <div class="fs-5 mb-5">
                         <p th:text="|가격 ${item.itemPrice}|">$10.00</p>
                         <p th:text="|재고 ${item.itemStock}"|>10</p>

@@ -27,21 +27,23 @@ public class ItemService {
 
     @Transactional
     public Item addItem(ItemDto itemDto, List<MultipartFile> itemImgFileList) throws Exception {
-        Item newItem = Item.builder()
-                .itemName(itemDto.getItemName())
-                .itemPrice(itemDto.getItemPrice())
-                .itemStock(itemDto.getItemStock())
-                .itemStatus(ItemStatus.SELL)
-//                .itemStatus(itemDto.getItemStatus())
-                .build();
+        log.info("addItem");
+
+        log.info("{}", itemDto.toString());
+
+        Item newItem = itemDto.toEntity();
+        newItem.setItemStatus(ItemStatus.SELL);
+
         log.info(itemDto.getItemName());
 
         //이미지 등록
         for(int i=0;i<itemImgFileList.size();i++){
             Image itemImg = new Image();
             itemImg.setItem(newItem);
+            newItem.getImages().add(itemImg);
 
-            imageService.saveImage(itemImg, itemImgFileList.get(i));
+            Image savedImage = imageService.saveImage(itemImg, itemImgFileList.get(i));
+
         }
 
         itemRepository.save(newItem);
