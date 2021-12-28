@@ -14,4 +14,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Page<ItemWithImage> findBy(Pageable pageable);
 
+
 }

@@ -27,28 +27,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
+        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/api/**");
+
     }
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .antMatchers("/**").permitAll()
-//                .and()
-//                .formLogin()
-//                .loginPage("/member/login")
-//                .defaultSuccessUrl("/")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-//                .logoutSuccessUrl("/")
-//                .invalidateHttpSession(true)
-//                .and()
-//                .exceptionHandling();
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.csrf().disable();
+
         http.formLogin()
                 .loginPage("/member/login")
                 .defaultSuccessUrl("/")

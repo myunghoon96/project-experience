@@ -26,7 +26,7 @@ public class ItemService {
     private ImageService imageService;
 
     @Transactional
-    public Item addItem(ItemDto itemDto, List<MultipartFile> itemImgFileList) throws Exception {
+    public Long addItem(ItemDto itemDto, List<MultipartFile> itemImgFileList) throws Exception {
         log.info("addItem");
 
         log.info("{}", itemDto.toString());
@@ -47,7 +47,7 @@ public class ItemService {
         }
 
         itemRepository.save(newItem);
-        return newItem;
+        return newItem.getId();
     }
 
     public ItemDto getItemDetail(Long itemId) {
@@ -61,9 +61,6 @@ public class ItemService {
                 .itemStock(findItem.getItemStock())
                 .itemStatus(findItem.getItemStatus())
                 .build();
-
-
-
 
         return itemDto;
 

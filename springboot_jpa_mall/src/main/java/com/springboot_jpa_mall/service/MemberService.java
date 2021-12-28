@@ -20,14 +20,14 @@ public class MemberService implements UserDetailsService {
     private MemberRepository memberRepository;
 
     @Transactional
-    public Member addMember(MemberDto memberDto) {
+    public Long addMember(MemberDto memberDto) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
 
         Member newMember = new Member(memberDto.getMemberLoginId(), memberDto.getPassword());
 
         memberRepository.save(newMember);
-        return newMember;
+        return newMember.getId();
     }
 
     @Override
