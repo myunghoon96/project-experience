@@ -24,7 +24,7 @@
 
         <th scope="row"><span th:text="${item.itemName}"></span></th>
         <td><a th:href="'/item/'+${item.id}" th:text="${item.itemName}"></a></td>
-        <td><img th:src="@{/images/abc.png}" th:alt="${item.itemName}" width="100" height="100"></td>
+        <td><img th:src="${item.getImages().get(0).getImageUrl()}" th:alt="${item.itemName}" width="100" height="100"></td>
 
 <!--        <td scope="row"><span th:text="${item.imageUrl}"></span></td>-->
         <td scope="row"><span th:text="${item.itemPrice}"></span></td>

@@ -8,6 +8,7 @@ import com.springboot_jpa_mall.repository.ImageRepository;
 import com.springboot_jpa_mall.repository.ItemRepository;
 
 import com.springboot_jpa_mall.repository.ItemWithImage;
+import com.springboot_jpa_mall.service.ImageService;
 import com.springboot_jpa_mall.service.ItemService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -37,17 +38,17 @@ public class ItemController {
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
-    private ImageRepository imageRepository;
+    private ImageService imageService;
 
     @GetMapping("")
     public String getAllItems(Model model) {
         PageRequest pageRequest = PageRequest.of(0, 100);
         Page<ItemWithImage> pageItems = itemRepository.findBy(pageRequest);
         model.addAttribute("pageItems", pageItems);
-        log.info("get all items");
-        log.info("{}", pageItems);
-        log.info("{}", pageItems.getContent());
-        log.info("{}", pageItems.getContent());
+
+        for (ItemWithImage pageItem : pageItems) {
+            log.info("{}", pageItem.getImages().get(0).getImageUrl());
+        }
         return "item/allItems";
     }
 
@@ -68,13 +69,13 @@ public class ItemController {
     public String itemDetail(Model model, @PathVariable("itemId") Long itemId){
         ItemDto itemDto = itemService.getItemDetail(itemId);
         Integer count = 1;
-        Optional<Image> imageWrapper = imageRepository.findTop1ByItemId(itemId);
-        String imageUrl = imageWrapper.get().getImageUrl();
-        log.info("image url {}", imageUrl);
+
+        List<String> imageUrls = imageService.findImageUrlsByItemId(itemId);
+
         model.addAttribute("item", itemDto);
         model.addAttribute("count", count);
         model.addAttribute("itemId", itemId);
-        model.addAttribute("imageUrl", imageUrl);
+        model.addAttribute("imageUrls", imageUrls);
         return "item/itemDetail";
     }
 
