@@ -72,7 +72,7 @@ public class ItemController {
 
         List<String> imageUrls = imageService.findImageUrlsByItemId(itemId);
 
-        model.addAttribute("item", itemDto);
+        model.addAttribute("itemDto", itemDto);
         model.addAttribute("count", count);
         model.addAttribute("itemId", itemId);
         model.addAttribute("imageUrls", imageUrls);
