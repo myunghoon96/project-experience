@@ -23,7 +23,7 @@ public class Order extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @Column(name = "order_status") @Enumerated(EnumType.STRING)
