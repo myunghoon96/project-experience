@@ -18,14 +18,9 @@
                     <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/member/logout}">로그아웃</a></li>
                     <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/member/order}">주문정보</a></li>
                     <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/member/account}">회원정보</a></li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/cart}">장바구니</a></li>
                 </ul>
-                <form class="d-flex">
-                    <button class="btn btn-outline-dark" type="submit">
-                        <i class="bi-cart-fill me-1"></i>
-                        Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                    </button>
-                </form>
+
             </div>
         </div>
     </nav>

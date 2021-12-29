@@ -28,6 +28,10 @@ public class OrderItem extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
 
+    @JoinColumn(name = "cart_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Cart cart;
+
     @Builder
     private OrderItem(Item item, Integer count, Integer orderPrice, Integer amount, Order order) {
         this.item = item;

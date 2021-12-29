@@ -3,10 +3,7 @@ package com.springboot_jpa_mall.service;
 import com.springboot_jpa_mall.constant.OrderStatus;
 import com.springboot_jpa_mall.dto.ItemDto;
 import com.springboot_jpa_mall.dto.OrderItemDto;
-import com.springboot_jpa_mall.entity.Item;
-import com.springboot_jpa_mall.entity.Member;
-import com.springboot_jpa_mall.entity.Order;
-import com.springboot_jpa_mall.entity.OrderItem;
+import com.springboot_jpa_mall.entity.*;
 import com.springboot_jpa_mall.repository.ItemRepository;
 import com.springboot_jpa_mall.repository.MemberRepository;
 import com.springboot_jpa_mall.repository.OrderRepository;
@@ -28,6 +25,8 @@ public class OrderService {
     private ItemRepository itemRepository;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    CartService cartService;
 
     @Transactional
     public void order(Long itemId, Principal principal, Integer count) {
@@ -49,6 +48,7 @@ public class OrderService {
         Order order = new Order();
         order.setMember(member);
         order.setOrderItems(orderItems);
+
         orderItem.setOrder(order);
         order.setOrderStatus(OrderStatus.OK);
         order.setTotalAmount(order.getTotalAmount());
@@ -59,5 +59,26 @@ public class OrderService {
         log.info("order={}", order.toString());
     }
 
+    @Transactional
+    public void orders(Member member, Cart cart) {
 
+        List<OrderItem> orderItems = cartService.getCartItems(member);
+        log.info("1");
+        Order order = new Order();
+        order.setMember(member);
+        log.info("2");
+
+        for (OrderItem orderItem : orderItems) {
+            order.getOrderItems().add(orderItem);
+            orderItem.setOrder(order);
+            Item item = orderItem.getItem();
+            item.subtractItemStock(orderItem.getCount());
+        }
+
+        log.info("3");
+        order.setOrderStatus(OrderStatus.OK);
+        order.setTotalAmount(order.getTotalAmount());
+        log.info("4");
+        orderRepository.save(order);
+    }
 }

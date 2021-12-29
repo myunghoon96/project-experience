@@ -3,6 +3,10 @@ package com.springboot_jpa_mall.controller;
 import com.springboot_jpa_mall.dto.ItemDto;
 import com.springboot_jpa_mall.dto.MemberDto;
 import com.springboot_jpa_mall.dto.OrderItemDto;
+import com.springboot_jpa_mall.entity.Cart;
+import com.springboot_jpa_mall.entity.Member;
+import com.springboot_jpa_mall.repository.CartRepository;
+import com.springboot_jpa_mall.repository.MemberRepository;
 import com.springboot_jpa_mall.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +24,11 @@ import java.security.Principal;
 public class OrderController {
     @Autowired
     OrderService orderService;
+    @Autowired
+    MemberRepository memberRepository;
+    @Autowired
+    CartRepository cartRepository;
 
-//    @GetMapping("/order/{itemId}")
-//    public String order() {
-//
-//        return "redirect:/";
-//
-//    }
 
     @PostMapping("/order")
     public String order(Principal principal, Long itemId, Integer count) {
@@ -38,5 +40,17 @@ public class OrderController {
         return "redirect:/";
 
     }
+
+    @PostMapping("/orders")
+    public String orders(Principal principal) {
+        Member member = memberRepository.findByMemberLoginId(principal.getName()).get();
+        Cart cart = cartRepository.findByMember(member).get();
+
+
+        orderService.orders(member, cart);
+        return "redirect:/";
+
+    }
+
 
 }

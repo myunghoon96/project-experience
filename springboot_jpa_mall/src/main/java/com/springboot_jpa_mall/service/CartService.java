@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -35,18 +36,19 @@ public class CartService {
         Member member = memberRepository.findByMemberLoginId(principal.getName()).get();
 
         log.info("member {}", member.getMemberLoginId());
-        Cart cart = new Cart();
-        cart.setMember(member);
-        List<OrderItem> orderItems = new ArrayList<>();
-        cart.setOrderItems(orderItems);
-        //        cart = cartRepository.findByMember(member).get();
-//        if (cart == null) {
-//            cart = new Cart();
-//            cart.setMember(member);
-//        }
+
+        Cart cart;
+        Optional<Cart> cartWrapper = cartRepository.findByMember(member);
+        if (cartWrapper.isPresent()){
+            cart = cartWrapper.get();
+        }
+        else {
+            cart = new Cart();
+            cart.setMember(member);
+            cartRepository.save(cart);
+        }
 
         log.info("cart {}", cart.getId());
-
         Item item = itemRepository.findById(itemId).get();
         OrderItem orderItem = OrderItem.builder()
                                 .item(item)
@@ -55,9 +57,28 @@ public class CartService {
                                 .amount(count*item.getItemPrice())
                                 .build();
         cart.getOrderItems().add(orderItem);
+        orderItem.setCart(cart);
 
+        log.info("TEST {}", cart.getOrderItems().get(0));
 
         cartRepository.save(cart);
     }
 
+    public List<OrderItem> getCartItems(Member member) {
+        Cart cart;
+        Optional<Cart> cartWrapper = cartRepository.findByMember(member);
+        if (cartWrapper.isPresent()){
+            cart = cartWrapper.get();
+        }
+        else {
+            cart = new Cart();
+            cart.setMember(member);
+            cartRepository.save(cart);
+        }
+
+        log.info("cart.getId {}", cart.getId());
+        log.info("cart.getOrderItems {}", cart.getOrderItems());
+        List<OrderItem> orderItems = cart.getOrderItems();
+        return orderItems;
+    }
 }

@@ -12,8 +12,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         registry.addResourceHandler("/images/**")
-                //.addResourceLocations("file:///C:/Users/NKNK-DESKTOP/Desktop/project-experience/springboot_jpa_mall/src/main/resources/static/images/");
-                .addResourceLocations("file:/Users/nknk/Desktop/project-experience/springboot_jpa_mall/src/main/resources/static/images/");
+                .addResourceLocations("file:///C:/Users/NKNK-DESKTOP/Desktop/project-experience/springboot_jpa_mall/src/main/resources/static/images/");
+//                .addResourceLocations("file:/Users/nknk/Desktop/project-experience/springboot_jpa_mall/src/main/resources/static/images/");
     }
 
 }

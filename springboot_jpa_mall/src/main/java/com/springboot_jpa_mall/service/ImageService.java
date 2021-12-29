@@ -26,10 +26,10 @@ public class ImageService {
 
         //파일 업로드
         if(!StringUtils.isEmpty(originalFilename)){
-//            imageName = fileService.uploadFile("C:/Users/NKNK-DESKTOP/Desktop/project-experience/springboot_jpa_mall/src/main/resources/static/images/", originalFilename,
-//                    itemImgFile.getBytes());
-            imageName = fileService.uploadFile("/Users/nknk/Desktop/project-experience/springboot_jpa_mall/src/main/resources/static/images/", originalFilename,
+            imageName = fileService.uploadFile("C:/Users/NKNK-DESKTOP/Desktop/project-experience/springboot_jpa_mall/src/main/resources/static/images/", originalFilename,
                     itemImgFile.getBytes());
+//            imageName = fileService.uploadFile("/Users/nknk/Desktop/project-experience/springboot_jpa_mall/src/main/resources/static/images/", originalFilename,
+//                    itemImgFile.getBytes());
             imageUrl = "/images/" + imageName;
         }
 
