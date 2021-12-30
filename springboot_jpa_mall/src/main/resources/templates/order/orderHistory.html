@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div th:replace="fragment/header :: header" />
+<table class="table table-hover">
+  <thead>
+  <tr>
+  </tr>
+  </thead>
+
+  <tbody>
+  <th:block th:each="order : ${orders}">
+    <tr>
+      <td th:text="|orderId ${order.id}|"></td>
+      <td th:text="|totalAmount ${order.totalAmount}|"></td>
+      <td th:text="|orderStatus ${order.orderStatus}|"></td>
+    </tr>
+
+    <tr th:each="orderItem : ${order.orderItems}">
+      <td th:text="| |"></td>
+      <td th:text="|itemName ${orderItem.item.itemName}|"></td>
+      <td><a th:href="'/item/'+${orderItem.item.id}" th:text="|detailPage ${orderItem.getItem().getId()}|"></a>
+      <td><img th:src="${orderItem.getItem().getImages().get(0).getImageUrl()}" th:alt="image_url" width="100" height="100">
+      <td th:text="|count ${orderItem.count}|"></td>
+      <td th:text="|orderPrice ${orderItem.orderPrice}|"></td>
+      <td th:text="|amount ${orderItem.amount}|"></td>
+    </tr>
+  </th:block>
+
+  </tbody>
+</table>
+
+<div th:replace="fragment/footer :: footer" />
+</body>
+
+</html>
