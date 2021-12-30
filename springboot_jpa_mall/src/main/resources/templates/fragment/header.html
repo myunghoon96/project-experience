@@ -10,14 +10,12 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link" href="">About</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/item}">전체상품</a></li>
                     <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/item/new}">상품추가</a></li>
                     <li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" th:href="@{/member/signup}">회원가입</a></li>
                     <li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" th:href="@{/member/login}">로그인</a></li>
                     <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/member/logout}">로그아웃</a></li>
-                    <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/member/order}">주문정보</a></li>
-                    <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/member/account}">회원정보</a></li>
+                    <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/order/history}">주문정보</a></li>
                     <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/cart}">장바구니</a></li>
                 </ul>
 
@@ -29,7 +27,7 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <h1 class="display-4 fw-bolder">Shop in style</h1>
-                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                <p class="lead fw-normal text-white-50 mb-0">With this shop homepage template</p>
             </div>
         </div>
     </header>

@@ -5,12 +5,15 @@ import com.springboot_jpa_mall.dto.MemberDto;
 import com.springboot_jpa_mall.dto.OrderItemDto;
 import com.springboot_jpa_mall.entity.Cart;
 import com.springboot_jpa_mall.entity.Member;
+import com.springboot_jpa_mall.entity.Order;
 import com.springboot_jpa_mall.repository.CartRepository;
 import com.springboot_jpa_mall.repository.MemberRepository;
+import com.springboot_jpa_mall.repository.OrderRepository;
 import com.springboot_jpa_mall.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
+
 @Slf4j
 @Controller
 public class OrderController {
+    @Autowired
+    OrderRepository orderRepository;
     @Autowired
     OrderService orderService;
     @Autowired
@@ -45,12 +52,16 @@ public class OrderController {
     public String orders(Principal principal) {
         Member member = memberRepository.findByMemberLoginId(principal.getName()).get();
         Cart cart = cartRepository.findByMember(member).get();
-
-
         orderService.orders(member, cart);
         return "redirect:/";
-
     }
 
+    @GetMapping("/order/history")
+    public String orderHistory(Principal principal, Model model) {
+        Member member = memberRepository.findByMemberLoginId(principal.getName()).get();
+        List<Order> orders = orderRepository.findByMember(member).get();
+        model.addAttribute("orders", orders);
+        return "order/orderHistory";
+    }
 
 }

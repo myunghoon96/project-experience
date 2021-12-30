@@ -50,14 +50,14 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @PostConstruct
-    public void initializing() {
-
-        MemberDto memberDto = MemberDto.builder()
-                .memberLoginId("userA")
-                .password("1234")
-                .build();
-        memberService.addMember(memberDto);
-    }
+//    @PostConstruct
+//    public void initializing() {
+//
+//        MemberDto memberDto = MemberDto.builder()
+//                .memberLoginId("userA")
+//                .password("1234")
+//                .build();
+//        memberService.addMember(memberDto);
+//    }
 
 }
