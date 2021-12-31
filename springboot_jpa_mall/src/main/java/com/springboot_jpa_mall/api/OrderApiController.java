@@ -11,6 +11,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,9 +26,10 @@ public class OrderApiController {
     @Autowired
     MemberRepository memberRepository;
 
+
     @GetMapping("/api/order/history")
     public getAllItemsResponse allOrders() {
-        List<Order> orders= orderRepository.findAll();
+        List<Order> orders= orderRepository.findAll2();
         List<OrderDTO2> OrderResults = orders.stream()
                         .map(order -> new OrderDTO2(order))
                         .collect(Collectors.toList());
@@ -70,11 +73,15 @@ public class OrderApiController {
         }
     }
 
+
+
     @GetMapping("/api/order/history/{memberLoginId}")
     public getAllItemsResponse orderHistory(@PathVariable String memberLoginId) {
-        Member member = memberRepository.findByMemberLoginId(memberLoginId).get();
-        List<Order> orders= orderRepository.findByMember(member).get();
-        return new getAllItemsResponse(orders.size(), orders);
+        List<Order> orders= orderRepository.findByMemberLoginId2(memberLoginId);
+        List<OrderDTO2> OrderResults = orders.stream()
+                .map(order -> new OrderDTO2(order))
+                .collect(Collectors.toList());
+        return new getAllItemsResponse(OrderResults.size(), OrderResults);
     }
 
     @Data
