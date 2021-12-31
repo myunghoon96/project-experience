@@ -6,6 +6,7 @@ import com.springboot_jpa_mall.entity.Order;
 import com.springboot_jpa_mall.entity.OrderItem;
 import com.springboot_jpa_mall.repository.MemberRepository;
 import com.springboot_jpa_mall.repository.OrderRepository;
+import com.springboot_jpa_mall.repository.query.OrderQueryRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,8 @@ public class OrderApiController {
     @Autowired
     OrderRepository orderRepository;
     @Autowired
+    OrderQueryRepository orderQueryRepository;
+    @Autowired
     MemberRepository memberRepository;
 
 
@@ -33,6 +36,17 @@ public class OrderApiController {
         List<OrderDTO2> OrderResults = orders.stream()
                         .map(order -> new OrderDTO2(order))
                         .collect(Collectors.toList());
+
+        return new getAllItemsResponse(OrderResults.size(), OrderResults);
+    }
+
+    @GetMapping("/api/order/history/paging")
+    public getAllItemsResponse allOrdersPaging(@RequestParam(name = "offset", defaultValue = "0") int offset,
+                                               @RequestParam(name = "limit", defaultValue = "100") int limit) {
+        List<Order> orders= orderQueryRepository.findAllPaging2(0, 100);
+        List<OrderDTO2> OrderResults = orders.stream()
+                .map(order -> new OrderDTO2(order))
+                .collect(Collectors.toList());
 
         return new getAllItemsResponse(OrderResults.size(), OrderResults);
     }
