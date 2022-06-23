@@ -1,4 +1,7 @@
-# project-experience
+# project-experience 요약
+### 0. 백오피스 대시보드 / 회사 / 2022  
+회사 프로젝트로 개발 서버를 구축하고, React, FastAPI, Redshift 기반의 대시보드를 개발하고 배포하였다. Azure AD, Redis, Docker, AWS EC2, AWS Certificate Manager, Route 53, Application Balancer, Nginx를 사용하였다.
+
 ### 1. 쇼핑몰 / 개인 프로젝트 / 2021  
 개인 프로젝트로 스프링부트, JPA, 타임리프를 사용하여 쇼핑몰 웹 및 API를 제작하였다. 회원가입, 로그인, 상품등록, 주문 등 기능을 구현하였다.
 
